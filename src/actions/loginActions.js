@@ -6,18 +6,18 @@ import { userConstants } from './actionTypes';
 import { userService } from '../services/login/LoginService';
 
 
-//export const userActions = {
-//};
-
 export const login = (username, password) =>{
+    console.log(username +'  '+ password)
     return dispatch => {
         dispatch(request({username}));
         userService.login(username, password)
             .then(
                 user => { 
+                    console.log('Login success');
                     dispatch(success(user));
                 },
                 error => {
+                    console.log('Login failure');
                     dispatch(failure(error));
                 }
             );

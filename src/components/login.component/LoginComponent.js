@@ -7,7 +7,7 @@ import { login } from '../../actions/loginActions';
 
 //https://stackblitz.com/edit/react-redux-registration-login-example
 
-export class LoginComponent extends Component{
+class LoginComponent extends Component{
 
    constructor(props){
     super(props);
@@ -28,9 +28,8 @@ handleSubmit(e) {
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, password } = this.state;
-    const { dispatch } = this.props;
     if (username && password) {
-       dispatch(login(username, password));
+       this.props.loginReq(username, password);
     }
 }
 
@@ -60,7 +59,9 @@ handleSubmit(e) {
 }
 
 
-const mapDispatchToProps = {
-  handleSubmit : login
+function mapDispatchToProps(dispatch) {
+  return {
+    loginReq: (username, password) => dispatch(login(username, password))
+  };
 }
-export default connect()(LoginComponent);
+export default connect(null, mapDispatchToProps, null)(LoginComponent);
