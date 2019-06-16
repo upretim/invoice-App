@@ -1,4 +1,3 @@
-
 // good redux tutorial
 //https://www.youtube.com/watch?v=OSSpVLpuVWA
 
@@ -7,7 +6,6 @@ import { userService } from '../services/login/LoginService';
 
 
 export const login = (username, password) =>{
-    console.log(username +'  '+ password)
     return dispatch => {
         dispatch(request({username}));
         userService.login(username, password)
@@ -26,17 +24,20 @@ export const login = (username, password) =>{
 
 function request(user) {
     return { 
-        type: userConstants.LOGIN_REQUEST, user 
+        type: userConstants.LOGIN_REQUEST,
+        payload: user 
        } 
    }
 function success(user) { 
    return { 
-       type: userConstants.LOGIN_SUCCESS, user 
+       type: userConstants.LOGIN_SUCCESS, 
+       payload: user 
    } 
 }
 function failure(error) { 
    return { 
-       type: userConstants.LOGIN_FAILURE, error 
+       type: userConstants.LOGIN_FAILURE, 
+       payload: error 
    } 
 }
 

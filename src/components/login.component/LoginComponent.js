@@ -4,7 +4,7 @@ import './LoginComponent.css';
 import LoginHeader from '../login.header/LoginHeader';
 import {connect} from 'react-redux';
 import { login } from '../../actions/loginActions';
-
+import HomeComponent from '../home.component/HomeComponent';
 //https://stackblitz.com/edit/react-redux-registration-login-example
 
 class LoginComponent extends Component{
@@ -12,24 +12,22 @@ class LoginComponent extends Component{
    constructor(props){
     super(props);
      this.state = {
-      username: '',
+       username: '',
        password:'',
        submitted: false
      }
-     this.handleChange = this.handleChange.bind(this);
-     this.handleSubmit = this.handleSubmit.bind(this);
    }
-   handleChange(e) {
+  handleChange = (e)=> {
     const { name, value } = e.target;
     this.setState({ [name]: value });
 }
 
-handleSubmit(e) {
+handleSubmit=(e) =>{
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, password } = this.state;
     if (username && password) {
-       this.props.loginReq(username, password);
+       this.props.loginRequest(username, password);
     }
 }
 
@@ -59,9 +57,9 @@ handleSubmit(e) {
 }
 
 
-function mapDispatchToProps(dispatch) {
+ const mapDispatchToProps=(dispatch) =>{
   return {
-    loginReq: (username, password) => dispatch(login(username, password))
+    loginRequest: (username, password) => dispatch(login(username, password))
   };
 }
 export default connect(null, mapDispatchToProps, null)(LoginComponent);
