@@ -5,12 +5,12 @@ import { userConstants } from './actionTypes';
 import { userService } from '../services/login/LoginService';
 
 
-export const login = (username, password) =>{
+export const login = (email, password) => {
     return dispatch => {
-        dispatch(request({username}));
-        userService.login(username, password)
+        dispatch(request({email}));
+        userService.login(email, password)
             .then(
-                user => { 
+                user => {
                     console.log('Login success');
                     dispatch(success(user));
                 },
@@ -23,25 +23,32 @@ export const login = (username, password) =>{
 }
 
 function request(user) {
-    return { 
-        type: userConstants.LOGIN_REQUEST,
-        payload: user 
-       } 
-   }
-function success(user) { 
-   return { 
-       type: userConstants.LOGIN_SUCCESS, 
-       payload: user 
-   } 
+    return {
+        type: userConstants.LOGIN_REQUEST
+    }
 }
-function failure(error) { 
-   return { 
-       type: userConstants.LOGIN_FAILURE, 
-       payload: error 
-   } 
+function success(user) {
+    return {
+        type: userConstants.LOGIN_SUCCESS,
+        payload: {
+            userName: user,
+            isloggeedIn: true
+        }
+    }
+}
+function failure(error) {
+    return {
+        type: userConstants.LOGIN_FAILURE
+    }
 }
 
-export const logout= () =>{
+export const logout = () => {
     userService.logout();
-    return { type: userConstants.LOGOUT };
+    return {
+        type: userConstants.LOGOUT,
+        payload: {
+            userName: '',
+            isloggeedIn: false
+        }
+    };
 }

@@ -9,9 +9,23 @@ class HomeComponent extends Component {
         super(props);
     }
     render() {
+        var invoiceArray = [{
+                    invoiceId: 'ALS/19-20/001',
+                     key:'ALS001'
+                    }, 
+        {invoiceId: 'ALS/19-20/002',
+        key:'ALS002'}, 
+        {invoiceId: 'ALS/19-20/003',
+        key:'ALS003'}];
         return (
             <div className="container">
-                This is home component...
+                <button className="btn btn-primary">Create Invoice</button>
+
+                <ul>
+                {invoiceArray.map(function(invoice, index){
+                    return <li key={ invoice.key }>{invoice.invoiceId}</li>;
+                  })}
+            </ul>
           </div>
         )
     }

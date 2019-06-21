@@ -5,6 +5,7 @@ import LoginHeader from '../login.header/LoginHeader';
 import {connect} from 'react-redux';
 import { login } from '../../actions/loginActions';
 import HomeComponent from '../home.component/HomeComponent';
+import { Route, Redirect, Link, BrowserRouter} from 'react-router-dom';
 //https://stackblitz.com/edit/react-redux-registration-login-example
 
 class LoginComponent extends Component{
@@ -14,23 +15,26 @@ class LoginComponent extends Component{
      this.state = {
        username: '',
        password:'',
-       submitted: false
+       submitted: false,
+       loading: false
      }
    }
-  handleChange = (e)=> {
+handleChange = (e)=> {
     const { name, value } = e.target;
     this.setState({ [name]: value });
 }
 
 handleSubmit=(e) =>{
     e.preventDefault();
-    this.setState({ submitted: true });
     const { username, password } = this.state;
     if (username && password) {
-       this.props.loginRequest(username, password);
+      this.setState({
+        loading: true,
+        submitted: true
+    });
+       this.props.loginRequest(username, password);     
     }
 }
-
     render(){
       const { username, password, submitted } = this.state;
         return(
@@ -57,9 +61,14 @@ handleSubmit=(e) =>{
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    isloggeedIn: state.login.isloggeedIn
+  };
+}
  const mapDispatchToProps=(dispatch) =>{
   return {
     loginRequest: (username, password) => dispatch(login(username, password))
   };
 }
-export default connect(null, mapDispatchToProps, null)(LoginComponent);
+export default connect(mapStateToProps, mapDispatchToProps, null)(LoginComponent);

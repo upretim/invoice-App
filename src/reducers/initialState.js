@@ -1,4 +1,4 @@
 export default {
-    isLoggedIn: false,
+    isloggeedIn: false,
     userName: ''
   };

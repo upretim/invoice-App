@@ -1,10 +1,10 @@
-const login = (username, password) => {
+const login = (email, password) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
-    const url = "http://localhost:5000/login"
+    const url = "http://localhost:5000/login";
 
     return fetch(url, requestOptions)
         .then(handleResponse)

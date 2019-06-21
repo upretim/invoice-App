@@ -1,18 +1,29 @@
-//https://stackblitz.com/edit/react-redux-registration-login-example
 import React from 'react';
 import LoginComponent from './components/login.component/LoginComponent';
-import { Route, Link, BrowserRouter} from 'react-router-dom';
+import { Route, Redirect, Link, BrowserRouter } from 'react-router-dom';
 import HomeComponent from './components/home.component/HomeComponent';
+import LogOut from './components/logout/logout';
 import './App.css';
+import { connect } from 'react-redux';
 
-function App() {
+function App(props) {
+
+  // if(this.props.isloggeedIn){
+  //   this.props.history.push('/home');
+  //   return(<div></div>)
+  // }
   return (
     <BrowserRouter>
-       <Route path="/" exact component={LoginComponent}/>
-       <Route path="/login" exact component={LoginComponent}/>
-       <Route path="/home" component={HomeComponent}/>
+      <Route path="/" exact component={props.isloggeedIn ? HomeComponent : LoginComponent} />
+      <Route path="/login" exact component={LoginComponent} />
+      <Route path="/home" component={props.isloggeedIn ? HomeComponent : LoginComponent} />
+      <Route path="/logout" component={LogOut} />
     </BrowserRouter>
   );
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isloggeedIn: state.login.isloggeedIn
+  };
+}
+export default connect(mapStateToProps, null, null)(App);
